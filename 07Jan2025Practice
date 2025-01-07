@@ -1,0 +1,34 @@
+**Joins**
+
+SELECT *  FROM trades T join users U on T.user_id = U.user_id;
+
+2--write a SQL JOIN query to find the top three cities that have the highest number of completed trade orders.
+
+SELECT U.city, count(T.order_id) as total_orders FROM trades T inner join users U on 
+T.user_id = U.user_id
+ where T.status = 'Completed' 
+ Group by U.city
+Order by total_orders desc LIMIT 3;
+
+3. Write a query to return the IDs of the Facebook pages that have zero likes. The output should be sorted in ascending order based on the page IDs.
+
+SELECT P.page_id FROM pages P left join page_likes  PL
+on P.page_id = PL.page_id
+where PL.page_id IS NULL
+order by page_id ASC;
+
+4. SQL JOIN with CASE WHEN
+Write a query to update the payment status of Facebook advertisers based on the information in the daily_pay table. The output should include the user ID and their current payment status, sorted by the user id.
+
+SELECT COALESCE(advertiser.user_id, daily_pay.user_id) AS user_id, 
+ CASE 
+    WHEN paid IS NULL THEN 'CHURN' 
+    WHEN paid IS NOT NULL AND advertiser.status IN ('NEW','EXISTING','RESURRECT') THEN 'EXISTING'
+    WHEN paid IS NOT NULL AND advertiser.status = 'CHURN' THEN 'RESURRECT'
+    WHEN paid IS NOT NULL AND advertiser.status IS NULL THEN 'NEW'
+  END AS new_status
+FROM advertiser
+FULL OUTER JOIN daily_pay
+  ON advertiser.user_id = daily_pay.user_id
+
+order by user_id;
