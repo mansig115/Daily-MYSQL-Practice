@@ -106,4 +106,45 @@ When platfrom = "twitter" the followers >= 200000
 Else followers >= 100000
 End;
 
+**sum()**
+
+SELECT
+  platform,
+  SUM(CASE 
+    WHEN engagement_rate >= 8.0 THEN followers
+    ELSE 0
+  END) AS high_engagement_followers_sum,
+  SUM(CASE 
+    WHEN engagement_rate < 8.0 THEN followers
+    ELSE 0
+  END) AS low_engagement_followers_sum
+FROM marvel_avengers
+GROUP BY platform;
+
+example--
+
+SELECT SUM(
+CASE WHEN device_type = 'laptop' Then 1
+Else 0 END) AS laptop_views,
+SUM(
+CASE WHEN device_type IN ( 'tablet','phone')
+Then 1
+Else 0 END) AS mobile_views FROM viewership;
+
+**average()-**
+
+SELECT
+  platform,
+  AVG(CASE 
+    WHEN engagement_rate >= 8.0 THEN followers
+    ELSE NULL
+  END) AS avg_high_engagement_followers,
+  AVG(CASE 
+    WHEN engagement_rate < 8.0 THEN followers
+    ELSE NULL
+  END) AS avg_low_engagement_followers
+FROM marvel_avengers
+GROUP BY platform;
+
+
 
