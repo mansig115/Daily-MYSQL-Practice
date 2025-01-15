@@ -1,0 +1,22 @@
+Select * from (Select *,row_number() over(order by EmployeeID) as rownumber from Employees)E where E.rownumber % 2 =1;
+
+-- fetch common records from 2 tables
+
+Select * from Employees E inner join Departments D 
+on E.DepartmentID = D.DepartmentID;
+
+-- find duplicate rows in a table
+
+INSERT INTO Employees (EmployeeID, FirstName, LastName, DepartmentID, HireDate, Salary)
+VALUES
+(111, 'John', 'Doe', 1, '2020-03-15', 55000.00);
+
+SELECT E.salary, COUNT(E.EmployeeID) AS employee_count
+FROM employees E
+JOIN departments D ON E.DepartmentID = D.DepartmentID
+GROUP BY E.salary
+HAVING COUNT(E.EmployeeID) > 1;
+
+-- Delete duplicate rows
+
+Delete E1 from employees E1 join employees E2 where E1.FirstName = E2.FirstName;
