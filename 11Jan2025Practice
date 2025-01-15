@@ -1,0 +1,16 @@
+-- Query to find first and last 2 records in a  table
+
+Select * from employees Limit 2;
+Select * from (Select * From employees order by EmployeeID desc Limit 2) as subquery
+order by EmployeeID asc;
+
+Select * from employees where EmployeeID > (Select max(EmployeeID) - 3 from employees);
+
+-- query to find first and last record from a table
+
+Select * from employees where EmployeeID=101 or EmployeeID=111;
+Select * from employees limit 1;
+Select * from employees  order by EmployeeID desc limit 1;
+
+Select * from employees where EmployeeID = 
+(Select max(EmployeeID) from employees);
