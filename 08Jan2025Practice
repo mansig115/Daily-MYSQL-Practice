@@ -1,0 +1,114 @@
+ 08 January, 2025
+-- Create Departments Table
+create database EmployeesDepartment;
+use EmployeesDepartment;
+CREATE TABLE Departments (
+    DepartmentID INT PRIMARY KEY,
+    DepartmentName VARCHAR(50) NOT NULL
+);
+
+-- Create Employees Table
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    DepartmentID INT,
+    HireDate DATE,
+    Salary DECIMAL(10, 2)
+    
+);
+-- Insert data into Departments
+INSERT INTO Departments (DepartmentID, DepartmentName)
+VALUES
+(1, 'Human Resources'),
+(2, 'Finance'),
+(3, 'IT'),
+(4, 'Marketing'),
+(5, 'Sales');
+
+-- Insert data into Employees
+INSERT INTO Employees (EmployeeID, FirstName, LastName, DepartmentID, HireDate, Salary)
+VALUES
+(101, 'John', 'Doe', 1, '2020-03-15', 55000.00),
+(102, 'Jane', 'Smith', 2, '2019-06-20', 75000.00),
+(103, 'Alice', 'Johnson', 3, '2021-10-01', 67000.00),
+(104, 'Bob', 'Brown', 4, '2020-08-25', 50000.00),
+(105, 'Charlie', 'Davis', 5, '2022-01-10', 60000.00),
+(106, 'Eve', 'Miller', 3, '2020-12-15', 72000.00),
+(107, 'Frank', 'Wilson', 5, '2021-04-11', 58000.00),
+(108, 'Grace', 'Taylor', 2, '2020-07-19', 80000.00),
+(109, 'Hank', 'Anderson', 4, '2019-11-05', 48000.00),
+(110, 'Ivy', 'Clark', 1, '2023-03-01', 51000.00);
+
+Select * from Employees;
+Select E.EmployeeID, E.FirstName, E.LastName, D.DepartmentName from
+Employees E join Departments D
+on E.DepartmentID = D.DepartmentID order by E.EmployeeID;
+Select E.EmployeeID, E.FirstName, E.LastName from
+Employees E join Departments D on E.DepartmentID = D.DepartmentID
+where E.Salary > 60000;
+
+Select Count(E.EmployeeID) as EmployeesCount,D.DepartmentName from Employees E left join Departments D
+on E.DepartmentID = D.DepartmentID
+group by D.DepartmentName;
+
+Select E.EmployeeID, E.FirstName, E.LastName, E.HireDate, D.DepartmentName from Employees E left join Departments D on E.DepartmentID = D.DepartmentID
+where E.HireDate>'2021-01-01';
+
+Select  max(Salary) as HighestSalary from Employees;
+
+-- Highest paid employee in IT department
+Select E.EmployeeID, E.FirstName, E.LastName,E.salary from Employees E  where salary = (
+Select max(salary) from Employees E left join
+Departments D
+on E.DepartmentID = D.DepartmentID where D.DepartmentName='IT');
+
+SELECT FirstName, LastName, Salary
+FROM Employees
+WHERE Salary = (
+    SELECT MAX(Salary)
+    FROM Employees e
+    JOIN Departments d ON e.DepartmentID = d.DepartmentID
+    WHERE d.DepartmentName = 'IT'
+);
+
+SELECT e.FirstName, e.LastName, e.Salary
+FROM Employees e
+JOIN Departments d ON e.DepartmentID = d.DepartmentID
+WHERE d.DepartmentName = 'IT'
+ORDER BY e.Salary DESC
+LIMIT 1;
+
+-- Retrieve the names of all employees along with their department names, 
+-- sorted alphabetically by the department.
+Select E.EmployeeID, E.FirstName, E.LastName,E.salary, D.DepartmentName
+ from Employees E join Departments D
+on E.DepartmentID = D.DepartmentID
+order by D.DepartmentName;
+
+
+-- List all employees who were hired in the last two years.
+
+SELECT FirstName, LastName, HireDate
+FROM Employees
+WHERE YEAR(HireDate) >= YEAR(CURDATE()) - 2;
+
+-- Find the number of employees who earn a salary above 50,000.
+Select  Count(*) from Employees where Salary > 50000;
+
+-- nth highest salary
+
+Select max(salary) from Employees where salary < (Select max(salary) from Employees);
+
+Select Distinct Salary from Employees order by salary desc limit 1 offset 0;
+
+With HighestSalary AS (Select EmployeeID, FirstName,salary, row_number() over(order by salary desc) as rownumber,
+rank() over(order by salary desc) as ranks,
+dense_rank() over(order by salary desc) as denserank 
+from Employees)
+Select * from  HighestSalary;
+
+With HighestSalary AS (Select EmployeeID, FirstName,salary, 
+dense_rank() over(order by salary desc) as denserank 
+from Employees)
+Select salary from  HighestSalary where denserank = 2;
