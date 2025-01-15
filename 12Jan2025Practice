@@ -1,0 +1,24 @@
+(SELECT *
+ FROM employees
+ ORDER BY EmployeeID ASC
+ LIMIT 1)
+UNION ALL
+(SELECT *
+ FROM employees
+ ORDER BY EmployeeID DESC
+ LIMIT 1);
+
+-- find distinct record without using distinct keyword   use group by for this
+
+Select EmployeeID from employees group by EmployeeID order by EmployeeID;
+
+Select EmployeeID from employees 
+UNION
+Select EmployeeID from employees;
+
+-- maximum salary for each dpeartment
+
+Select  D.DepartmentName, max(Salary) from 
+employees E
+join departments D on E.DepartmentID=D.DepartmentID
+group by DepartmentName ;
