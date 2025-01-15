@@ -1,0 +1,19 @@
+-- Employees whose names starts with 'A'
+Select EmployeeID, FirstName from Employees where FirstName LIKE 'A%';
+Select EmployeeID, FirstName from Employees where FirstName LIKE 'A%' or  FirstName LIKE 'B%' or  FirstName LIKE 'H%';
+
+-- query to display currentdate
+
+Select Current_Date, Current_Date(), Curdate(),Date(now()), Date(current_timestamp());
+
+-- Fetch Alternate Records from a table
+
+-- If records have even or odd ids
+
+Select * from Employees where EmployeeID % 2 =0;
+Select * from Employees where EmployeeID % 2 =1;
+
+-- Else use row_numbers
+
+Select * from (Select *, row_number() over(order by EmployeeID) as rownumber from Employees) E
+where E.rownumber % 2 = 0;
