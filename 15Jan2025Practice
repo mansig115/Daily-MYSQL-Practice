@@ -1,0 +1,8 @@
+1683. Invalid Tweets
+
+Select tweet_id from Tweets where length(content) > 15;
+
+1378. Replace Employee ID With The Unique Identifier
+
+Select  EU.unique_id, E.name from  EmployeeUNI EU
+Right JOIN Employees E on EU.id = E.id;
