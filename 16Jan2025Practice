@@ -24,4 +24,4 @@ Select * from employeeinfo limit 2;
 Select * from employeeinfo order by EmpID desc limit 2;
 
 Write a query to retrieve the EmpFname and EmpLname in a single column as “FullName”. The first name and the last name must be separated with space.
-Select Concat(EmpFname+" "+EmpLname) as FullName from employeeinfo;
+Select Concat(EmpFname," ",EmpLname) as FullName from employeeinfo;
