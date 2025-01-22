@@ -1,0 +1,27 @@
+Write a query to fetch the EmpFname from the EmployeeInfo table in the upper case and use the ALIAS name as EmpName.
+Select Upper(EmpFname) as EmpName from EmployeeInfo;
+
+Write a query to fetch the number of employees working in the department ‘HR’.
+Select Count(*) from employeeinfo where Department='HR';
+
+Write a query to get the current date.
+Select Curdate() from employeeinfo;
+
+Write a query to retrieve the first four characters of  EmpLname from the EmployeeInfo table.
+Select substring(EmpLname, 1, 4) from employeeinfo;
+
+Write a query to fetch only the place name(string before brackets) from the Address column of EmployeeInfo table.
+SELECT SUBSTRING(Address, 1, CHARINDEX('(',Address)) FROM EmployeeInfo;
+
+Write q query to find all the employees whose salary is between 50000 to 100000.
+Select * from employeeposition where salary between 50000 and 100000;
+
+Write a query to find the names of employees that begin with ‘S’
+Select * from employeeinfo where EmpFname like 'S%';
+
+Write a query to fetch top N records.
+Select * from employeeinfo limit 2;
+Select * from employeeinfo order by EmpID desc limit 2;
+
+Write a query to retrieve the EmpFname and EmpLname in a single column as “FullName”. The first name and the last name must be separated with space.
+Select Concat(EmpFname+" "+EmpLname) as FullName from employeeinfo;
