@@ -1,4 +1,4 @@
-# Daily-MYSQL-Practice
+# MYSQL-Practice
 I am documenting my daily MySQL learning here to keep track of my progress.
 Day 1-
 ****CASE statements-**
