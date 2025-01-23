@@ -1,0 +1,27 @@
+Write a query to fetch all employee details.
+Select * from employees;
+
+Fetch employee names who work in a specific department, e.g., "Sales."
+Select E.FirstName, D.DepartmentName from employees E join 
+departments D on E.DepartmentID=D.DepartmentID where D.DepartmentName="Sales";
+
+Fetch all departments along with their employees.
+Select E.FirstName, D.DepartmentName from employees	E join departments D on 
+E.DepartmentID=D.DepartmentID;
+
+Count the total number of employees in each department.
+Select Count(*) as count, D.DepartmentName from employees	E join departments D on 
+E.DepartmentID=D.DepartmentID group by D.DepartmentName;
+
+Find the department with the highest number of employees.
+Select Count(*) as highest_count, D.DepartmentName from employees	E join departments D on 
+E.DepartmentID=D.DepartmentID group by D.DepartmentName order by count(*) desc limit 1;
+
+Fetch the average salary of employees in each department.
+Select Avg(salary), D.DepartmentName from employees	E join departments D on 
+E.DepartmentID=D.DepartmentID group by D.DepartmentName;
+
+
+Write a query to get the total and average salary of all employees.
+Select SUM(Salary) as Total, Avg(Salary) as Avg_Salary from employees;
+
