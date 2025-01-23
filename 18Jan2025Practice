@@ -1,0 +1,23 @@
+Fetch employees with salaries greater than a specific value.
+Select FirstName, Salary from employees where salary > 75000;
+
+List the top 5 highest-paid employees.
+Select FirstName, Salary from employees order by Salary Desc Limit 5;
+
+
+Fetch employees who joined in the last 6 months.
+Select * from employees where HireDate >= DATE_ADD(CURDATE(), INTERVAL -6 MONTH);
+
+Fetch employees whose salaries are above the average salary of their department.
+SELECT E.*
+FROM employees E
+WHERE E.Salary > (
+    SELECT AVG(E1.Salary)
+    FROM employees E1
+    WHERE E1.DepartmentID = E.DepartmentID
+);
+
+
+
+List departments that do not have any employees.
+Select * from departments D right join employees E on E.DepartmentID=D.DepartmentID
