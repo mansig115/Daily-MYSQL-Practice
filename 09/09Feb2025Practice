@@ -1,0 +1,3 @@
+Write a solution to report the product_name, year, and price for each sale_id in the Sales table.
+Select P.product_name, S.year, S.price from Product P right join Sales S
+on P.product_id = S.product_id;
